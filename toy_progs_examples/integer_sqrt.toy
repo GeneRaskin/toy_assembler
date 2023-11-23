@@ -1,0 +1,72 @@
+sym error_code
+val 0xffff
+
+offset 0xF
+load r2 0xFF
+
+bposi r2 @continue_prog
+bzero r2 @continue_prog
+load r4 @error_code
+halt r0 r0 r0
+
+sym continue_prog
+xor r1 r1 r1
+xor r3 r3 r3
+add r4 r2 r0
+loada r7 0x01
+
+sym find_sqrt
+sub r8 r3 r4
+bposi r8 @finished
+add r5 r3 r0 # r5 = midpoint
+add r5 r5 r4
+rshift r5 r5 r7
+# add a check in case we have
+# overflows in multiplication
+loada r8 0xB5
+sub r8 r5 r8
+bposi r8 @adjust_high
+add ra r2 r0
+add rb r3 r0
+add r2 r5 r0
+add r3 r5 r0
+loada r8 @multiply
+jmp r0 r0 r8
+sym after_mul
+add r2 ra r0
+add r3 rb r0
+sub r8 r2 r1
+bzero r8 @adjust_low
+bposi r8 @adjust_low
+sym adjust_high
+sub r5 r5 r7
+add r4 r5 r0
+loada r8 @find_sqrt
+jmp r0 r0 r8
+
+sym adjust_low
+add r5 r5 r7
+add r3 r5 r0
+loada r8 @find_sqrt
+jmp r0 r0 r8
+
+sym finished
+stor r4 0xff
+halt r0 r0 r0
+
+sym multiply
+xor r1 r1 r1
+loada rc 0x10
+
+sym multiply_loop
+and r8 r2 r7
+bzero r8 @no_add
+add r1 r1 r3
+sym no_add
+lshift r3 r3 r7
+rshift r2 r2 r7
+sub rc rc r7
+bposi rc @multiply_loop
+
+loada r8 @after_mul
+jmp r0 r0 r8

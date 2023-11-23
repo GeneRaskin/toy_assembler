@@ -1,0 +1,25 @@
+offset 0x10
+
+loada rf 0xf0
+load r1 0xff
+sub rf rf r1
+ljmp re @get_input
+halt r0 r0 r0
+
+sym get_input
+
+load r2 @int_1
+add r3 rf r0
+add r5 r1 r0
+
+sym get_input_loop
+load r4 0xff
+istor r4 r0 r3
+sub r5 r5 r2
+add r3 r3 r2
+bposi r5 @get_input_loop
+
+jmp r0 r0 re
+
+sym int_1
+val 0x0001
