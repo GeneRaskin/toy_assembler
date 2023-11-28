@@ -7,7 +7,8 @@ int    add_label(sym_table_t *sym_table, const char *label_name, addr_t addr) {
         return 0;
     }
     label_t *last_label_p = &sym_table->labels[*label_count_p];
-    strlcpy(last_label_p->label_name, label_name, MAX_LABEL_LEN + 1);
+    strncpy(last_label_p->label_name, label_name, MAX_LABEL_LEN + 1);
+    last_label_p->label_name[MAX_LABEL_LEN] = '\0'; // ensure null termination
     last_label_p->addr = addr;
     (*label_count_p)++;
     return 1;

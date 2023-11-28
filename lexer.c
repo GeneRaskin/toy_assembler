@@ -74,8 +74,10 @@ static token_t which_token(env_t *env) {
     }
 
     errno = 0;
-    strtol(env->curr_token, NULL, 0);
-    if (errno != EINVAL) {
+    char *endptr;
+    strtol(env->curr_token, &endptr, 0);
+    if (errno != EINVAL && errno != ERANGE && *endptr == '\0'
+        && *env->curr_token) {
         return ABS_ADDRESS;
     }
 

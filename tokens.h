@@ -56,19 +56,9 @@ typedef enum lexer_state_flag_e {
 
 typedef uint32_t lexer_state_t;
 
-static const char *instruction_names[] = {
-        "halt", "add", "sub", "and",
-        "xor", "lshift", "rshift", "loada",
-        "load", "stor", "iload", "istor",
-        "bzero", "bposi", "jmp", "ljmp"
-};
+extern const char *instruction_names[];
 
-static const char *reg_names[] = {
-        "r0", "r1", "r2", "r3",
-        "r4", "r5", "r6", "r7",
-        "r8", "r9", "ra", "rb",
-        "rc", "rd", "re", "rf"
-};
+extern const char *reg_names[];
 
 struct env_s;
 

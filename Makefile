@@ -1,6 +1,7 @@
 CC = gcc
 NAME = toyc
-OBJS = bin_generator.o env.o lexer.o main.o parser.o sym_table.o
+OBJS = bin_generator.o env.o lexer.o main.o parser.o sym_table.o \
+	tokens.o
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE = bin_generator.h env.h parser.h instruction_format.h \
 	sym_table.h tokens.h
